@@ -1,0 +1,105 @@
+﻿@model EmployeeInputFilter
+@{
+    ViewData["Title"] = "Employees Page";
+}
+
+<h1>Employee Index Page</h1>
+
+<div class="card shadow border-0 mt-4">
+    <div class="card-header bg-secondary bg-gradient ml-0 py-3">
+        <div class="row">
+            <div class="col-12 text-center">
+                <h1 class="text-white">Employee List</h1>
+            </div>
+        </div>
+    </div>
+    <div class="card-body p-4">
+        <div class="row pb-3">
+            <div class="col-6">
+            </div>
+            <div class="col-6 text-end">
+                <a asp-controller="Employee" asp-action="EmployeeCreate" class="btn btn-outline-primary"><i class="bi bi-plus-square"></i> Create new employee</a>
+            </div>
+        </div>
+        <div class="row">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <form asp-action="EmployeeIndex" method="post">
+                            <th>
+                                <input asp-for="@Model.EmployeeFilter.FirstName" class="col-12 col-sm-9" placeholder="Full Name" />
+                            </th>
+                            <th>
+                                <select asp-for="@Model.EmployeeFilter.Subdivision" class="form-select col-12 col-sm-9" asp-items="@ViewBag.Subdivisions">
+                                    <option disabled selected>---Select Subdivisions---</option>
+                                </select>
+                            </th>
+                            <th>
+                                <select asp-for="@Model.EmployeeFilter.Position" class="form-select col-12 col-sm-9" asp-items="@ViewBag.Positions">
+                                    <option disabled selected>---Select Positions---</option>
+                                </select>
+                            </th>
+                            <th>
+                                <input asp-for="@Model.EmployeeFilter.Status" class="col-12 col-sm-9" placeholder="Status" />
+                            </th>
+                            <th>
+                                <select asp-for="@Model.EmployeeFilter.PeoplePartner" class="form-select col-12 col-sm-9" asp-items="@ViewBag.PeoplePartners">
+                                    <option disabled selected>---Select Partner---</option>
+                                </select>
+                            </th>
+                            <th>
+                                <input asp-for="@Model.EmployeeFilter.PhoneNumber" class="col-12 col-sm-9" placeholder="Phone" />
+                            </th>
+                            <th>
+                                <input asp-for="@Model.EmployeeFilter.OutOfOfficeBalance" class="col-12 col-sm-9" placeholder="Out Of Office Balance" />
+                            </th>
+
+                            <th>
+                                <div class="col-12">
+                                    <input type="submit" value="Filter" class="btn btn-success form-control" />
+                                </div>
+                            </th>
+                        </form>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.Employees)
+                    {
+                        <tr>
+                            <td>
+                                @(item.FirstName + ' ' + item.LastName)
+                            </td>
+                            <td>
+                                @item.Subdivision
+                            </td>
+                            <td>
+                                @item.Position
+                            </td>
+                            <td>
+                                @item.Status
+                            </td>
+                            <td>
+                                @item.PeoplePartner
+                            </td>
+                            <td>
+                                @item.PhoneNumber
+                            </td>
+                            <td>
+                                @(item.OutOfOfficeBalance)
+                            </td>
+
+                            <td>
+                                <a asp-action="EmployeeUpdate" asp-route-employeeId="@item.EmployeeId" class="btn btn-success">
+                                    <i class="bi bi-pencil-square"></i>
+                                </a>
+                                <a asp-action="EmployeeDelete" asp-route-employeeId="@item.EmployeeId" class="btn btn-danger">
+                                    <i class="bi bi-trash"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

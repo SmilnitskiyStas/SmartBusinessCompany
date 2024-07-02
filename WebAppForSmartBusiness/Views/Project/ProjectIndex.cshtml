@@ -1,0 +1,91 @@
+﻿@model ProjectInputFilter
+@{
+    ViewData["Title"] = "Projects Page";
+}
+
+<h1>Project Index Page</h1>
+
+<div class="card shadow border-0 mt-4">
+    <div class="card-header bg-secondary bg-gradient ml-0 py-3">
+        <div class="row">
+            <div class="col-12 text-center">
+                <h1 class="text-white">Project List</h1>
+            </div>
+        </div>
+    </div>
+    <div class="card-body p-4">
+        <div class="row pb-3">
+            <div class="col-6">
+            </div>
+            <div class="col-6 text-end">
+                <a asp-controller="Project" asp-action="ProjectCreate" class="btn btn-outline-primary"><i class="bi bi-plus-square"></i> Create new project</a>
+            </div>
+        </div>
+        <div class="row">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <form asp-action="ProjectIndex" method="post">
+                            <th>
+                                <input asp-for="@Model.ProjectForFilter.ProjectTypeId" class="col-12 col-sm-9" placeholder="Project Type" />
+                            </th>
+                            <th>
+                                <select asp-for="@Model.ProjectForFilter.ProjectManagerId" class="form-select col-12 col-sm-9" asp-items="@ViewBag.ProjectManagers">
+                                    <option disabled selected>---Select Manager---</option>
+                                </select>
+                            </th>
+                            <th>
+                                <input asp-for="@Model.ProjectForFilter.StartDate" type="date" class="col-12 col-sm-9" placeholder="Start date" />
+                            </th>
+                            <th>
+                                <input asp-for="@Model.ProjectForFilter.EndDate" type="date" class="col-12 col-sm-9" placeholder="End date" />
+                            </th>
+                            <th>
+                                <select asp-for="@Model.ProjectForFilter.Status" class="form-select col-12 col-sm-9" asp-items="@ViewBag.PeoplePartners">
+                                    <option disabled selected>---Select Partner---</option>
+                                </select>
+                            </th>
+
+                            <th>
+                                <div class="col-12">
+                                    <input type="submit" value="Filter" class="btn btn-success form-control" />
+                                </div>
+                            </th>
+                        </form>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.Projects)
+                    {
+                        <tr>
+                            <td>
+                                @item.ProjectType
+                            </td>
+                            <td>
+                                @item.ProjectManager
+                            </td>
+                            <td>
+                                @item.StartDate
+                            </td>
+                            <td>
+                                @item.EndDate
+                            </td>
+                            <td>
+                                @item.Status
+                            </td>
+
+                            <td>
+                                <a asp-action="ProjectUpdate" asp-route-projectId="@item.ProjectId" class="btn btn-success">
+                                    <i class="bi bi-pencil-square"></i>
+                                </a>
+                                <a asp-action="ProjectDelete" asp-route-projectId="@item.ProjectId" class="btn btn-danger">
+                                    <i class="bi bi-trash"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
